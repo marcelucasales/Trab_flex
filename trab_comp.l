@@ -2,62 +2,59 @@
 #include <stdio.h>
 %}
 
-UPPERCASE_LETTER    [A-Z]
-LOWERCASE_LETTER    [a-z]
-LETTER              ({LOWERCASE_LETTER}|{UPPERCASE_LETTER})
-DIGITOS = [0-9]
-BLANK               (" "|\f|\r|\t|\v)
+UPPERCASE_LETTER [A-Z]
+LOWERCASE_LETTER [a-z]
+LETTER ({LOWERCASE_LETTER}|{UPPERCASE_LETTER})
+DIGITOS [0-9]
+BLANK (" "|\f|\r|\t|\v)
 
-CLASS = (?i:class)
-ELSE = (?i:else)
-IF = (?i:if)
-FI = (?i:fi)
-IN = (?i:in)
-LET = (?i:let)
-POOL = (?i:pool)
-ESAC = (?i:esac)
-OF = (?i:of)
-NOT = (?i:not)
-TRUE = (t)(?i:rue)
-FALSE = (f)(?i:alse)
-INHERITS = (?i:inherits)
-ISVOID = (?i:isvoid)
-THEN = (?i:then)
-WHILE = (?i:while)
-NEW = (?i:new)
-CASE = (?i:case)
-LOOP = (?i:loop)
+CLASS (?i:class)
+ELSE (?i:else)
+IF (?i:if)
+FI (?i:fi)
+IN (?i:in)
+LET (?i:let)
+POOL (?i:pool)
+ESAC (?i:esac)
+OF (?i:of)
+NOT (?i:not)
+TRUE (t)(?i:rue)
+FALSE (f)(?i:alse)
+INHERITS (?i:inherits)
+ISVOID (?i:isvoid)
+THEN (?i:then)
+WHILE (?i:while)
+NEW (?i:new)
+CASE (?i:case)
+LOOP (?i:loop)
 
 INT_CONST   {DIGITOS}+
-TIPOIDENT = ("SELF_TYPE"|{UPPERCASE_LETTER}({LETTER}|{DIGIT}|"_")*)
-OBJIDENT = ("self"|{LETTER}({LETTER}|{DIGITOS}|"_")*)
-CHAR = .|\r
-STRINGINICIO = \"
-STRINGCHAR  = [^\"\0\n\\]+
-STRINGFIM = \"
-COMENTARIOLINHA = --[^\n]*
-COMENTARIOTXTINICIO = \(\*
-COMENTARIOTXTFIM = \*\)
-NOVALINHA = \n
-SOMA = "+"
-SUBTRAI = "-"
-MULTIPLICA = "*"
-DIVIDE = "/"
-IGUAL = "="
-MENOR = "<"
-MENORIGUAL = "<="
-NEGATIVO = "~"
-PONTOVIRGULA = ";"
-DOISPONTOS = ":"
-PONTO = "."
-VIRGULA = ","
-ABREPARENTESIS = "("
-FECHAPARENTESIS = ")"
-ABRECHAVE = "{"
-FECHACHAVE = "}"
-ATTRIB = "<-"
-AT = "@"
-ARROW = "=>"
+TIPOIDENT ("SELF_TYPE"|{UPPERCASE_LETTER}({LETTER}|{DIGITOS}|"_")*)
+OBJIDENT ("self"|{LETTER}({LETTER}|{DIGITOS}|"_")*)
+CHAR .|\r
+STRINGCHAR [^\"\0\n\\]+
+COMENTARIOTXTINICIO [\*]
+COMENTARIOTXTFIM [*\]
+NOVALINHA \n
+SOMA "+"
+SUBTRAI "-"
+MULTIPLICA "*"
+DIVIDE "/"
+IGUAL "="
+MENOR "<"
+MENORIGUAL "<="
+NEGATIVO "~"
+PONTOVIRGULA ";"
+DOISPONTOS ":"
+PONTO "."
+VIRGULA ","
+ABREPARENTESIS [(]
+FECHAPARENTESIS [)]
+ABRECHAVE "{"
+FECHACHAVE "}"
+ATTRIB "<-"
+AT "@"
+ARROW "=>"
 
 %%
 
@@ -68,10 +65,7 @@ main {printf("[%s]) -> FUNCAO PRINCIPAL\n",yytext);}
 {TIPOIDENT} {printf("[%s]) -> identificador do tipo que foi criado/modelado para classe\n",yytext);}
 {OBJIDENT} {printf("[%s]) -> identificador para um objeto que foi criado a partir de uma classe\n",yytext);}
 {CHAR} {printf("[%s]) -> caracter encontrado\n",yytext);}
-{STRINGINICIO} {printf("[%s]) -> inicio de uma string\n",yytext);}
-{STRINGFIM} {printf("[%s]) -> fim de uma string\n",yytext);}
 {STRINGCHAR} {printf("[%s]) -> caracter de uma string\n",yytext);}
-{COMENTARIOLINHA} {printf("[%s]) -> comentário de linha\n",yytext);}
 {COMENTARIOTXTINICIO} {printf("[%s]) -> inicio de um comentário\n",yytext);}
 {COMENTARIOTXTFIM} {printf("[%s]) -> fim de um comentário\n",yytext);}
 {NOVALINHA} {printf("[%s]) -> nova linha\n",yytext);}
